@@ -1,9 +1,6 @@
 #
-# RethinkDB instance configuration sample
+# RethinkDB instance configuration 
 #
-# - Give this file the extension .conf and put it in /etc/rethinkdb/instances.d in order to enable it.
-# - See http://www.rethinkdb.com/docs/guides/startup/ for the complete documentation
-# - Uncomment an option to change its value.
 #
 
 ###############################
@@ -29,7 +26,7 @@ rungroup=rethinkdb
 ## Directory to store data and metadata
 ## Command line default: ./rethinkdb_data
 ## Init script default: /var/lib/rethinkdb/<name>/ (where <name> is the name of this file without the extension)
-directory={{ /var/lib/rethinkdb/default }}
+directory={{ storage_directory_base }}/{{ storage_data }}
 
 ## Log file options
 ## Default: <directory>/log_file
@@ -40,28 +37,28 @@ directory={{ /var/lib/rethinkdb/default }}
 ## Address of local interfaces to listen on when accepting connections
 ## May be 'all' or an IP address, loopback addresses are enabled by default
 ## Default: all local addresses
-bind={{ local_ip }}
+bind={{ ansible_default_ipv4.address }}
 
 ## Address that other rethinkdb instances will use to connect to this server.
 ## It can be specified multiple times
-canonical-address={{ local_ip }}
+canonical-address={{ ansible_default_ipv4.address }}
 
 ## The port for rethinkdb protocol for client drivers
 ## Default: 28015 + port-offset
-driver-port={{ 28015 }}
+driver-port={{ port.driver }}
 
 ## The port for receiving connections from other nodes
 ## Default: 29015 + port-offset
-cluster-port={{ 29015 }}
+cluster-port={{ port.cluster }}
 
 ## The host:port of a node that rethinkdb will connect to
 ## This option can be specified multiple times.
 ## Default: none
-join={{example.com}}:{{29015}}
+join={{ master_node.stdout }}:{{ port.cluster }}
 
 ## All ports used locally will have this value added
 ## Default: 0
-# port-offset=0
+port-offset={{ port.offset }}
 
 ## r.http(...) queries will use the given server as a web proxy
 ## Default: no proxy
@@ -80,18 +77,18 @@ no-http-admin
 
 ## The number of cores to use
 ## Default: total number of cores of the CPU
-#cores={{ 2 }}
+cores={{ ansible_processor_cores }}
 
 ### Memory options
 
 ## Size of the cache in MB
 ## Default: Half of the available RAM on startup
-cache-size={{ 1024 }}
+cache-size={{ (ansible_memtotal_mb * 0.85)|int|abs }}
 
 ### Disk
 
 ## How many simultaneous I/O operations can happen at the same time
-io-threads={{ 64 }}
+io-threads={{ io_threads }}
 
 ## Enable direct I/O
 # direct-io

@@ -1,2 +1,52 @@
 ---
 # tasks file for rethinkdb
+ - name: Add repo for apt based systems
+   apt_repository: repo='deb http://download.rethinkdb.com/apt {{ ansible_lsb.codename }} main' state=present filename=rethinkdb
+   when: ansible_os_family == "Debian"
+
+ - name: Add gpg key for Debian based systems
+   apt_key: url=https://download.rethinkdb.com/apt/pubkey.gpg state=present
+   when: ansible_os_family == "Debian"
+
+ - name: Add repo for rpm based systems
+   get_url: url=https://download.rethinkdb.com/centos/{{ ansible_distribution_major_version }}/{{ ansible_architecture }}/rethinkdb.repo dest=/etc/yum.repos.d/rethinkdb.repo
+   when: (ansible_os_family == "RedHat") and ( ansible_distribution_major_version >= "6")
+
+ - name: Add the libselinux library
+   package: name=libselinux-python state=latest
+   when: ansible_os_family == "RedHat"
+
+ - name: Disable selinux
+   selinux: state=disabled
+   ignore_errors: yes
+
+ - name: Install the rethinkdb server
+   package: name=rethinkdb state=latest
+
+ - name: Ensure rethinkdb group exists
+   group: name=rethinkdb state=present system=yes
+
+ - name: Ensure rethinkdb user exists
+   user: name=rethinkdb state=present groups=disk,wheel,rethinkdb createhome=no system=yes
+
+ - name: Make the data storage base directory
+   file: dest={{ storage_directory_base }} state=directory group=rethinkdb mode=0775
+
+ - name: Register the master node ip
+   command: echo {{ ansible_eth0.ipv4.address }}
+   register: master_node
+   run_once: true
+   
+ - name: Initialize the storage directory
+   command: rethinkdb create --directory {{ storage_directory_base }}/{{ storage_data }}
+
+ - name: Update permissions for the data directory
+   file: path={{ storage_directory_base }}/{{ storage_data }} owner=rethinkdb group=rethinkdb
+
+ - name: Customize the rethinkdb setup
+   template: src=rethinkdb.j2 dest=/etc/rethinkdb/instances.d/rethinkdb.conf group=rethinkdb
+
+ - name: Start the deamon and run on boot
+   echo: "Starting the cluster"
+   notify:
+   - bootstrap rethinkdb

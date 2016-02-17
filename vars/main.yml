@@ -1,2 +1,10 @@
 ---
 # vars file for rethinkdb
+storage_directory_base: /var/lib/rethinkdb
+storage_data: data
+port:
+  driver: 28015
+  cluster: 29015
+  offset: 0
+server_tag: nyc
+io_threads: 64

@@ -1,2 +1,4 @@
 ---
 # handlers file for rethinkdb
+ - name: bootstrap rethinkdb
+   service: name=rethinkdb state=started enabled=yes
