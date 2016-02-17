@@ -54,7 +54,7 @@ cluster-port={{ port.cluster }}
 ## The host:port of a node that rethinkdb will connect to
 ## This option can be specified multiple times.
 ## Default: none
-join={{ master_node.stdout }}:{{ port.cluster }}
+join={{ cluster_lead }}:{{ port.cluster }}
 
 ## All ports used locally will have this value added
 ## Default: 0

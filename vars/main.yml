@@ -8,3 +8,4 @@ port:
   offset: 0
 server_tag: nyc
 io_threads: 64
+cluster_lead:

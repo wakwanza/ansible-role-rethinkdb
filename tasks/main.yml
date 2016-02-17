@@ -16,9 +16,14 @@
    package: name=libselinux-python state=latest
    when: ansible_os_family == "RedHat"
 
- - name: Disable selinux
-   selinux: state=disabled
+ - name: Check if SELinux status
+   command: getenforce
+   register: selinux_status
    ignore_errors: yes
+
+ - name: Set SELinux permissive if present and Enforcing
+   selinux: state=permissive policy=targeted
+   when: ( selinux_status.rc == "Enforcing")
 
  - name: Install the rethinkdb server
    package: name=rethinkdb state=latest
@@ -36,7 +41,13 @@
    command: echo {{ ansible_eth0.ipv4.address }}
    register: master_node
    run_once: true
-   
+   when: cluster_lead is not defined
+
+ - name: Save the new cluster leader
+   local_action: "lineinfile dest=vars/main.yml regexp='^cluster_lead:' line=cluster_lead: {{ master_node.rc }} state=present backup=yes"
+   run_once: true
+   when: cluster_lead is not defined
+
  - name: Initialize the storage directory
    command: rethinkdb create --directory {{ storage_directory_base }}/{{ storage_data }}
 
@@ -47,6 +58,6 @@
    template: src=rethinkdb.j2 dest=/etc/rethinkdb/instances.d/rethinkdb.conf group=rethinkdb
 
  - name: Start the deamon and run on boot
-   echo: "Starting the cluster"
+   echo: "Bootstrap start the cluster"
    notify:
    - bootstrap rethinkdb

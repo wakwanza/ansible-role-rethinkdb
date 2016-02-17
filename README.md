@@ -1,31 +1,52 @@
-Role Name
+rethinkdb
 =========
 
-A brief description of the role goes here.
+NoSQL RethinkDB for Linux.
 
-Requirements
-------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+<table>
+    <tr>
+        <td>`storage_directory_base`</td> <td>Directory root to store data and metadata.Defaults to /var/lib/rethinkdb</td>
+    </tr>
+        <tr>
+        <td>`storage_data`</td> <td>RW Directory to store data and metadata.Defaults to 'data' to create {{ storage_directory_base }}/data </td>
+    </tr>
+    <tr>
+        <td>`port.driver`</td> <td>The port for rethinkdb protocol for client drivers.Defaults to '28015'</td>
+    </tr>
+    </tr>
+    <tr>
+        <td>`port.cluster`</td> <td>The port for receiving connections from other nodes.Defaults to '29015'</td>
+    </tr>
+    <tr>
+        <td>`port.offset`</td> <td>All ports used locally will have this value added.Defaults to '0'</td>
+    </tr>
+     <tr>
+        <td>`server_tag`</td> <td>Tag name usable to identify groupings for sharding etc.Defaults to 'nyc'</td>
+    </tr>
+    <tr>
+        <td>`io_threads`</td> <td> How many simultaneous I/O operations can happen at the same time.Defaults to '64'</td>
+    </tr>
+    <tr>
+        <td>`cluster_lead`</td> <td>Sets up the ipv4 address for the initial leader.Defaults to pick first host that role will run on.</td>
+    </tr>
+</table>
 
-Dependencies
-------------
-
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+For secure installation the web-admin interface is disabled , nodes listen to the default intefaces's ipv4 address.The number of cores used is the total available in each node and the memory cache available is set at 0.85 of the total available RAM.
+Further tuning possible by modifying values in 'templates/rethinkdb.j2'.
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+Install the role using galaxy : ansible-galaxy install wakwanza.rethinkdb
 
-    - hosts: servers
+    - hosts: nosqldb
       roles:
-         - { role: username.rolename, x: 42 }
+         - { role: wakwanza.rethinkdb }
 
 License
 -------
@@ -35,4 +56,4 @@ MIT
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+@wakwanza Abdulrahim Umar.
