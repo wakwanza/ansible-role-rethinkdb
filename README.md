@@ -32,7 +32,7 @@ Role Variables
         <td>`io_threads`</td> <td> How many simultaneous I/O operations can happen at the same time.Defaults to '64'</td>
     </tr>
     <tr>
-        <td>`cluster_lead`</td> <td>Sets up the ipv4 address for the initial leader.Defaults to pick first host that role will run on.</td>
+        <td>`cluster_lead`</td> <td>The ipv4 address for the initial leader.If not set defaults to pick first host that role will run on.</td>
     </tr>
 </table>
 

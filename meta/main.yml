@@ -2,8 +2,7 @@ galaxy_info:
   author: abdulrahim umar
   description: Install and setup rethinkdb cluster on Linux
   company: wakwanza
-  license: MIT
-  
+  license: MIT 
   min_ansible_version: 2.0
   github_branch: master
 

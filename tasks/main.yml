@@ -23,7 +23,7 @@
 
  - name: Set SELinux permissive if present and Enforcing
    selinux: state=permissive policy=targeted
-   when: ( selinux_status.rc == "Enforcing")
+   when: ( selinux_status.stdout == "Enforcing")
 
  - name: Install the rethinkdb server
    package: name=rethinkdb state=latest
@@ -41,10 +41,9 @@
    command: echo {{ ansible_eth0.ipv4.address }}
    register: master_node
    run_once: true
-   when: cluster_lead is not defined
 
  - name: Save the new cluster leader
-   local_action: "lineinfile dest=vars/main.yml regexp='^cluster_lead:' line=cluster_lead: {{ master_node.rc }} state=present backup=yes"
+   local_action: "lineinfile dest=vars/main.yml regexp='^cluster_lead:' line='cluster_lead: {{ master_node.stdout }}' state=present backup=yes"
    run_once: true
    when: cluster_lead is not defined
 
