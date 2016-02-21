@@ -1,5 +1,5 @@
 galaxy_info:
-  author: abdulrahim umar
+  author: wakwanza
   description: Install and setup rethinkdb cluster on Linux
   company: wakwanza
   license: MIT 
@@ -32,6 +32,7 @@ galaxy_info:
     - jessie
     - wheezy
   
-  galaxy_tags: database, rethinkdb, nosql, documentdb
-
-dependencies: []
+  galaxy_tags: 
+     - database
+     - rethinkdb
+     - nosql

@@ -1,9 +1,14 @@
-rethinkdb
+Ansible Role: Rethinkdb
 =========
 
-NoSQL RethinkDB for Linux.
+An Ansible Role that installs RethinkDB on RedHat/CentOS,Debian/Ubuntu or Archlinux.
 
 
+Requirements
+------------
+
+Works on Linux versions based on Enterprise Linux (CentOS/RedHat >=6), Debian (jessie & wheezy) and Ubuntu (>=precise).
+On EL based distributions SELINUX needs to be set to permissive for some of the tasks to work.
 
 Role Variables
 --------------
