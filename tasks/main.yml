@@ -43,7 +43,7 @@
    run_once: true
 
  - name: Save the new cluster leader
-   local_action: "lineinfile dest=vars/main.yml regexp='^cluster_lead:' line='cluster_lead: {{ master_node.stdout }}' state=present backup=yes"
+   local_action: "lineinfile dest=vars/main.yml regexp='^cluster_lead:' line='cluster_lead: {{ master_node.stdout }}' state=present"
    run_once: true
    when: cluster_lead is not defined
 
@@ -54,7 +54,7 @@
    file: path={{ storage_directory_base }}/{{ storage_data }} owner=rethinkdb group=rethinkdb
 
  - name: Customize the rethinkdb setup
-   template: src=rethinkdb.j2 dest=/etc/rethinkdb/instances.d/rethinkdb.conf group=rethinkdb
+   template: src=rethinkdb.j2 dest=/etc/rethinkdb/instances.d/rethinkdb.conf group=rethinkdb backup=yes
 
  - name: Start the deamon and run on boot
    echo: "Bootstrap start the cluster"

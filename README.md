@@ -1,6 +1,8 @@
 Ansible Role: Rethinkdb
 =========
 
+[![Build Status](https://travis-ci.org/wakwanza/ansible-role-rethinkdb.svg?branch=master)](https://travis-ci.org/wakwanza/ansible-role-rethinkdb)
+
 An Ansible Role that installs RethinkDB on RedHat/CentOS,Debian/Ubuntu or Archlinux.
 
 
