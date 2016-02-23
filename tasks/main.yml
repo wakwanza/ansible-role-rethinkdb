@@ -57,6 +57,6 @@
    template: src=rethinkdb.j2 dest=/etc/rethinkdb/instances.d/rethinkdb.conf group=rethinkdb backup=yes
 
  - name: Start the deamon and run on boot
-   echo: "Bootstrap start the cluster"
+   command: echo "Bootstrap start the cluster"
    notify:
    - bootstrap rethinkdb
