@@ -1,6 +1,6 @@
 galaxy_info:
   author: wakwanza
-  description: Install and setup rethinkdb cluster on Linux
+  description: Install and setup RethinkDB cluster on Linux
   company: wakwanza
   license: MIT 
   min_ansible_version: 2.0

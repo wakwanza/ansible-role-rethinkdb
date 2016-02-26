@@ -1,4 +1,4 @@
-Ansible Role: Rethinkdb
+Ansible Role: RethinkDB
 =========
 
 [![Build Status](https://travis-ci.org/wakwanza/ansible-role-rethinkdb.svg?branch=master)](https://travis-ci.org/wakwanza/ansible-role-rethinkdb)
