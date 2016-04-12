@@ -91,6 +91,18 @@ io-threads={{ io_threads }}
 ## Enable direct I/O
 # direct-io
 
+## SSL and TLS connections
+# ca cert and key
+driver-tls-key={{ tls.key }}
+driver-tls-cert={{ tls.cert }}
+driver-tls-ca={{ tls.ca }}
+
+cluster-tls-key={{ tls.key }}
+cluster-tls-cert={{ tls.cert }}
+cluster-tls-ca={{ tls.ca }}
+
+tls-dhparams={{ tls.dhparams }}
+
 ### Meta
 
 ## The name for this server (as will appear in the metadata).
