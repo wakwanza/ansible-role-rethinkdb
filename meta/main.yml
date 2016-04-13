@@ -24,9 +24,6 @@ galaxy_info:
     - utopic
     - vivid
     - wily
-  - name: ArchLinux
-    versions:
-    - any
   - name: Debian
     versions:
     - jessie
